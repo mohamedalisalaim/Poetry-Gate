@@ -34,7 +34,7 @@ jobs:
           flutter-version: "2.0.0"
           channel: 'stable'
       # 12
-      - name:update flutter version
+      - name: flutter version
         run: flutter upgrade
       - name: Get dependencies
         run: flutter pub get
