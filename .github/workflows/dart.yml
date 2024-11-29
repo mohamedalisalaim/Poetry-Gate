@@ -21,7 +21,7 @@ jobs:
      - uses: actions/checkout@v4
      - uses: actions/setup-java@v4
        with:
-        distribution: 'oracale' # See 'Supported distributions' for available options
+        distribution: 'oracle' # See 'Supported distributions' for available options
         java-version: '21'
      # Download and install flutter packages
      - name: Install Flutter
