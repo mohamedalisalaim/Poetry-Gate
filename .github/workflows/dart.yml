@@ -22,7 +22,7 @@ jobs:
      - uses: actions/setup-java@v4
        with:
         distribution: 'oracle' # See 'Supported distributions' for available options
-        java-version: '21'
+        java-version: '18'
      # Download and install flutter packages
      - name: Install Flutter
        uses: subosito/flutter-action@v2
