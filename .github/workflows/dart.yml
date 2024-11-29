@@ -1,55 +1,38 @@
-name: "Build"
+name: Build
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
 
-jobs:  
-  build:      
-    name: Build & Release 
-    runs-on: ubuntu-latest
+# A single workflow can have multiple jobs.
+jobs: 
+ # 'A new job is defined with the name: "build_android" 
+ build_android:
+   # Defines what operating system will be used for the actions.
+   # For android, we will use Linux GitHub-Hosted Runner.
+   runs-on: ubuntu-22.04
+   # Defines what step should be passed for successful run
+   steps:
+     # Checkout to the selected branch
+     - name: Checkout
+       uses: actions/checkout@v3
+     # Download and install flutter packages
+     - name: Install Flutter
+       uses: subosito/flutter-action@v2
+       with:
+         # Define which stable flutter version should be used
+         flutter-version: "3.5.4"
+         channel: 'stable'
+         # Enables cache for flutter packages              
+         # Speed up the process
+         cache: true
+     # Get Flutter project dependencies
+     - name: Get dependencies
+       run: flutter pub get
 
-    steps:
-        #1 Checkout Repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+     - name: build apk
+       run: flutter build apk
+       
 
-        #2 Setup Java 
-      - name: Setup Java JDK
-        uses: actions/setup-java@v4.5.0
-      
-        #3 Setup Flutter
-      - name: Set Up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.5.4'
-          channel: 'stable'
-
-        #4 Install Dependencies
-      - name: Install Dependencies
-        run: flutter pub get
-
-       #6 Building APK
-      - name: Build APK
-        run: flutter build apk --release
-        
-        #9 Upload Artifacts
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: Releases
-          path: |
-            build/app/outputs/flutter-apk/app-release.apk
-
-        
-        #13 Create Release
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
-          tag: v${{ env.VERSION }}
-          token: ${{ secrets.TOKEN }}
+    
