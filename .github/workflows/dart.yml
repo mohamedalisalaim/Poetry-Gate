@@ -43,10 +43,10 @@ jobs:
      - name: Upload Artifacts
        uses: actions/upload-artifact@v2
        with:
-        name: Releases
-        path: build/app/outputs/flutter-apk/app-release.apk
+         name: Releases
+         path: build/app/outputs/flutter-apk/app-release.apk
 
      - name: Create Release
        uses: ncipollo/release-action@v1
        with:
-        artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+         artifacts: "build/app/outputs/flutter-apk/app-release.apk"
